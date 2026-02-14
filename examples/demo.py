@@ -4,8 +4,8 @@ from datetime import datetime
 import os
 import sys
 
-# Add src to path
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+# Add parent directory (containing src/) to path
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 from src.scientific_agent import KnowledgeBase, Hypothesis
 from src.agent import DeepScientificAgent

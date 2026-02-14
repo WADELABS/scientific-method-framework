@@ -3,15 +3,13 @@ Scientific Method Framework - Source Package
 Re-exports core modules for convenient importing.
 """
 
-from core.agent import *
-from core.scientific_agent import *
-from core.foundations import *
-from core.visualization import *
+# Lazy imports to avoid requiring all dependencies upfront
+# Import these modules explicitly when needed
 
 __all__ = [
-    'DeepScientificAgent',
-    'KnowledgeBase',
-    'Hypothesis',
-    'ScientificParadigm',
-    'EnhancedScientificVisualizer',
+    'agent',
+    'scientific_agent',
+    'foundations',
+    'visualization',
+    'vsa',
 ]
