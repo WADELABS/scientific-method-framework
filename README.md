@@ -39,5 +39,8 @@ To meet enterprise-grade requirements for AI accountability, the framework ensur
 python portfolio_demo.py
 ```
 
+## ⚖️ Governance & Alignment
+The Scientific Method Framework implements "Human-in-the-loop Integrity," requiring manual cryptographic authorization for any hypothesis that overlaps with restricted physical or chemical security boundaries. The framework is hard-coded to reject the autonomous deduction of axioms that violate international biological or chemical safety conventions.
+
 ---
 *Developed for WADELABS Agentic Architecture Research 2026*
