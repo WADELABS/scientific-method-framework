@@ -2,6 +2,12 @@
 # A functional demonstration of the SMF as a "Safety Rail" for GCP deployments.
 
 import asyncio
+import sys
+import os
+
+# Ensure the core module is in the path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from core.scientific_agent import ScientificAgent, KnowledgeBase, Hypothesis, Experiment
 from core.foundations import EpistemicVirtue, ScientificParadigm
 from datetime import datetime

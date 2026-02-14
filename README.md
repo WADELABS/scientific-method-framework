@@ -1,11 +1,10 @@
-# Scientific Method Framework (SMF)
-### Computational Constraints for Verifiable Agentic Autonomy
+# Fixer's Log: Scientific Method Framework (SMF)
+## Solving the "Hallucinating AI" Crisis (Phase 3)
 
-[![Framework: SMF](https://img.shields.io/badge/framework-SMF-blueviolet)](#)
-[![Constraint: Empirical](https://img.shields.io/badge/constraint-empirical-teal)](#)
-[![Environment: The Crucible](https://img.shields.io/badge/environment-the--crucible-purple)](#)
+> "A high-profile technical client came to me with a nightmare: their autonomous trading agents were 'lying' to them—hallucinating transaction confirmations and following phantom causal links. Generic safety wrappers weren't seeing the problem because the code was technically valid, just epistemologically broken. They needed more than a debugger; they needed a computational straitjacket."
 
-> "In an era of stochastic parrots, the Scientific Method Framework (SMF) enforces empirical rigor on agentic reasoning. It transforms the scientific method from a human workflow into a computational bottleneck, ensuring that no action is taken without a falsifiable hypothesis and a validated experiment."
+### The "Why": Computational Constraints for Verifiable Agentic Autonomy
+In an era of stochastic parrots, the SMF enforces empirical rigor on agentic reasoning...
 
 ## 🏛️ Epistemological Grounding
 The SMF functions as a **Logical Constraint Layer** for Large Language Models. In the context of Antigravity or other agentic systems, this isn't just a philosophy—it’s the "safety rail" that prevents hallucinated paths by requiring rigorous, repeatable validation loops. 
