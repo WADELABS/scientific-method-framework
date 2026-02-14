@@ -40,3 +40,10 @@ MANIFEST
 
 # Logs
 *.log
+
+# Database files
+*.db
+vsa_*_provenance.db
+
+# Reports directory
+reports/
