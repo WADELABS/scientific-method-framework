@@ -3,8 +3,8 @@ import logging
 import sys
 import os
 
-# Ensure local 'src' is in path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), ".")))
+# Ensure local 'src' is in path - add parent directory
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 try:
     from z3 import *

@@ -40,3 +40,9 @@ MANIFEST
 
 # Logs
 *.log
+
+# Database files
+*.db
+
+# Reports directory
+reports/
