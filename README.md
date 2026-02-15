@@ -1,35 +1,32 @@
-# Scientific-Method: The Professor's Revenge 🔬
+# Scientific-Method-Framework (SMF) 🔬
 
-> **"State of Doubt is the precursor to Wisdom."**
+> **"The Last Line of Defense Against Stochastic Parrots."**
 
-The **Scientific-Method Framework** is a Cognitive Guardrail for Large Language Models. It solves the "Academic Arms Race" by forcing AI agents out of the "Confident Liar" state and into a rigorous "Hypothesis -> Research -> Synthesis" pipeline.
+The Scientific-Method-Framework (SMF) is a high-fidelity **epistemological substrate** designed to transform AI from a confident hallucinatory generator into a rigorous research discipline. 
 
-## 🏛️ The Problem: Intellectual Laziness
-In the current LLM landscape, AI generates fluent but unverified claims. Students submit these "confidently hallucinated" papers, skipping the "messy middle" of actual research.
+## 📜 The Narrative: The Professor's Revenge
+The SMF solves the "Academic Arms Race" by forcing AI agents out of "Inference Mode" and into a "State of Doubt." Before an agent utters a word, it must treat its intuition as a hypothesis that requires empirical validation.
 
-## 🛡️ The Solution: Empirical Validation Substrate
-This framework refactors the AI's cognitive process to mirror a PhD candidate's laboratory workflow:
+## 🏛️ Architecture: The Truth Operating System
 
-1.  **Hypothesis Generation**: The AI's intuition is captured as an `UNVERIFIED_CLAIM`. It is never presented to the user at this stage.
-2.  **The Trial by Fire (Active Research)**: The agent designs search queries and retrieves data from a **Strict Source Registry** (.edu, .gov, peer-reviewed databases).
-3.  **Conflict Detection**: Evidence is cross-verified. Discrepancies between the AI's intuition and external facts trigger a `REFINE_OR_REJECT` loop.
-4.  **Synthesis & Provenance**: The final conclusion is delivered with a complete **Research Log**, ensuring zero-hallucination outputs.
+### 🔍 1. Hypothesis Layer (`core/hermeneutics.py`)
+Implementation of the **Contextual Anchor**. This layer ensures the AI isn't just "consistent" but "grounded." It weighs internal formal logic (Z3) against external reality data-streams.
 
-## ⚙️ Architecture
+### 🛡️ 2. Credibility Engine
+Strict **Source Sovereignty** ensures that citations only come from verified academic (.edu, .gov) and institutional databases. 
 
-![Scientific Method Diagram](images/scientific_method_diagram.jpg)
+### ⚡ 3. Sub-Millisecond Integrity
+Architected for performance. Leveraging probabilistic verification to ensure high-fidelity audits without bottlenecking the agent's utility.
 
-### Core Components
-- **`main.py`**: Orchestrates the `ScientificAgent` using a "Doubt First" methodology.
-- **`credibility.py`**: The **Substrate Registry** that enforces academic-grade source requirements.
-- **`research.py`**: The **Active Researcher** that performs cross-verification and conflict detection.
-
-## 🚀 Deployment
-
-```bash
-# Initialize the PhD Agent
-python -m src.scientific_method.main
-```
+## ⚙️ Substrate Workflow
+1. **Inquiry**: AI generates a `Raw Claim`.
+2. **Suspension of Belief**: The claim is tagged as `UNVERIFIED`.
+3. **Active Research**: Heuristic engines query real-world databases (Crossref, arXiv).
+4. **Hermeneutic Evaluation**: The `Contextual Anchor` validates the claim's salience.
+5. **Verified Conclusion**: Only then is the "Truth" synthesized for the user.
 
 ---
-*Part of the WADELABS Precision Engineering Suite. Zero-Friction. Zero-Hallucination.*
+## 🚀 Phase 3 Transition: Generative Autonomy
+We are moving from **Corrective** sanitization to **Generative** autonomy. The SMF is the driver for the next generation of safe, novel AI solutions.
+
+*Developed by WADELABS. Precision Thought. Zero Hallucination.*
