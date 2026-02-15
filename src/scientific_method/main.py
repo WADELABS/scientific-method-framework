@@ -5,49 +5,45 @@ The Hypothesis Layer: AI as a PhD Candidate.
 
 import asyncio
 from typing import List
-from .research import ResearchAgent
+from .research import CitationVerifier
 
-class ScientificAgent:
-    def __init__(self, researcher: ResearchAgent):
-        self.researcher = researcher
+class AcademicAuditAgent:
+    def __init__(self, verifier: CitationVerifier):
+        self.verifier = verifier
 
-    def generate_raw_claim(self, observation: str) -> str:
-        """The AI's 'Intuition' - potential hallucination zone."""
-        # In a real implementation, this would call the LLM
-        return f"Hypothesis based on observation: {observation}"
+    def extract_student_claim(self, submission: str) -> str:
+        """Isolates the raw claim from the student's submission."""
+        return f"Claim isolated from submission: {submission}"
 
-    async def inquire(self, observation: str):
-        """Standard scientific inquiry process."""
-        print(f"\n🔬 Processing Observation: '{observation}'")
+    async def audit_submission(self, submission: str):
+        """The Professor's Audit: Detecting fake citations and hallucinations."""
+        print(f"\n🔬 Auditing Student Submission: '{submission}'")
         
-        # Phase 1: Hypothesis (The AI's 'Intuition')
-        # We treat this as UNVERIFIED immediately.
-        hypothesis = self.generate_raw_claim(observation)
-        print(f"DEBUG: Hypothesis Generated: {hypothesis[:50]}...")
+        # Phase 1: Isolation (Finding the claim to be verified)
+        claim = self.extract_student_claim(submission)
+        print(f"DEBUG: Isolated Claim: {claim[:50]}...")
 
-        # Phase 2: The 'Trial by Fire' (Active Research)
-        # The AI is now forced to find REAL sources before proceeding.
-        print("DEBUG: Initiating Active Research Phase...")
-        verification = await self.researcher.test_hypothesis(hypothesis)
+        # Phase 2: Citation Verification (The Gauntlet)
+        print("DEBUG: Initiating Citation Verification...")
+        report = await self.verifier.verify_citations(claim)
         
-        # Phase 3: Synthesis (Only outputting what survived the test)
-        conclusion = self.formulate_conclusion(verification, hypothesis)
+        # Phase 3: The Verdict (Only verified facts survive)
+        verdict = self.generate_verdict(report, claim)
         
-        print("\n✅ FINAL VERIFIED CONCLUSION:")
-        print(conclusion)
-        return conclusion
+        print("\n🎓 FINAL ACADEMIC VERDICT:")
+        print(verdict)
+        return verdict
 
-    def formulate_conclusion(self, verification: dict, original_hypothesis: str) -> str:
-        """Synthesize research into a final, verifiable conclusion."""
-        salience = verification.get("salience", 0.0)
+    def generate_verdict(self, report: dict, claim: str) -> str:
+        """Synthesize verification report into a final verdict."""
+        salience = report.get("salience", 0.0)
         
-        if salience < 0.7:
-            return f"RESULT: INCONCLUSIVE (Salience: {salience}). Insufficient reality-grounding for this hypothesis."
+        if report.get("is_hallucination") or salience < 0.7:
+            return f"VERDICT: REJECTED (Salience: {salience}). Hallucination detected. No credible citations found."
         
-        sources = "\n".join([f"- {s}" for s in verification['credible_sources']])
-        return f"RESULT: VERIFIED (Salience: {salience}).\nConclusion: {original_hypothesis}\nSupported by:\n{sources}"
+        citations = "\n".join([f"- {s}" for s in report['verified_sources']])
+        return f"VERDICT: VERIFIED (Salience: {salience}).\nClaim: {claim}\nSupported by Actual Citations:\n{citations}"
 
 if __name__ == "__main__":
-    from .research_test import MockResearchAgent # Placeholder for testing
-    agent = ScientificAgent(MockResearchAgent())
-    asyncio.run(agent.inquire("Atmospheric composition influences nitrogen levels."))
+    # Note: Requires setup of verifier and substrate
+    pass

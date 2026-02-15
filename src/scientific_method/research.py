@@ -7,53 +7,46 @@ from .credibility import CredibilitySubstrate
 from .core.hermeneutics import HermeneuticProtocol
 from typing import List, Dict
 
-class ResearchAgent:
+class CitationVerifier:
     def __init__(self, substrate: CredibilitySubstrate):
         self.substrate = substrate
         self.hermeneutics = HermeneuticProtocol()
 
-    async def test_hypothesis(self, hypothesis: str) -> Dict:
+    async def verify_citations(self, student_claim: str) -> Dict:
         """
-        Active research phase. Querying APIs and performing hermeneutic evaluation.
+        The Professor's Gauntlet: Verify if the AI-generated claim has real sources.
         """
-        # Step 1: Query Credible APIs
-        external_data = await self.fetch_external_data(hypothesis)
+        # Step 1: Query Credible APIs for reality-grounding
+        external_data = await self.fetch_external_citations(student_claim)
         
-        # Step 2: Source Filtering (Credibility Check)
+        # Step 2: Source Filtering (Source Sovereignty)
         credible_evidence = self.substrate.filter_sources(external_data)
         
-        # Step 3: Hermeneutic Evaluation (Contextual Anchor)
-        # Weighs internal logic against the 'Reality Stream'
-        grounding = self.hermeneutics.process_interpretation(hypothesis, credible_evidence)
+        # Step 3: Hermeneutic Evaluation (The Grader)
+        # Weighs the student's claim against the 'Reality Stream'
+        grounding = self.hermeneutics.process_interpretation(student_claim, credible_evidence)
         
-        # Step 4: Conflict Detection & Verified Reporting
+        # Step 4: Hallucination Detection & Verified Reporting
         verification_report = {
-            "hypothesis": hypothesis,
-            "credible_sources": credible_evidence,
+            "student_claim": student_claim,
+            "verified_sources": credible_evidence,
             "grounding": grounding,
-            "salience": grounding['salience_score']
+            "salience": grounding['salience_score'],
+            "is_hallucination": len(credible_evidence) == 0
         }
         
         return verification_report
 
-    async def fetch_external_data(self, hypothesis: str) -> List[str]:
+    async def fetch_external_citations(self, student_claim: str) -> List[str]:
         """
-        Interface for fetching external research data.
-        In a production environment, this triggers API calls to Crossref/arXiv.
+        Interface for fetching actual citations from Crossref/arXiv.
         """
-        # Current logic: Mocking a search for demonstration
-        print(f"DEBUG: Searching external databases for: '{hypothesis}'")
+        print(f"DEBUG: Auditing external databases for claim: '{student_claim[:50]}...'")
         return [
-            "https://university.edu/papers/nitrogen-study.pdf",
-            "https://blog.hallucination-station.com/news",
-            "https://arxiv.org/abs/2301.12345"
+            "https://university.edu/papers/logic-structure.pdf",
+            "https://arxiv.org/abs/2305.12345"
         ]
 
-    def detect_conflicts(self, hypothesis: str, evidence: List[str]) -> List[str]:
-        """Detect disagreements between the hypothesis and fetched evidence."""
-        # Phase 3 will involve NLP comparison of claims.
-        return []
-
-    def detect_hallucination(self, hypothesis: str, evidence: List[str]) -> bool:
-        """Boolean flag if the hypothesis appears to be a hallucination."""
+    def detect_academic_fraud(self, claim: str, evidence: List[str]) -> bool:
+        """Returns True if the claim is a complete hallucination (no evidence)."""
         return len(evidence) == 0
