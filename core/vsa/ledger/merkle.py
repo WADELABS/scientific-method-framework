@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Optional
 from datetime import datetime
 import logging
 
+
 class MerkleBlock:
     """Represents a single block in the Merkle ledger."""
     
@@ -33,6 +34,7 @@ class MerkleBlock:
             "previous_hash": self.previous_hash,
             "hash": self.hash
         }
+
 
 class MerkleLedger:
     """

@@ -1,5 +1,6 @@
-from typing import List, Dict, Any, Optional
+from typing import List, Any
 import logging
+
 
 class FormalLogicEngine:
     """
@@ -68,10 +69,13 @@ class FormalLogicEngine:
         
         # Check for explicit contradictions
         for i, stmt1 in enumerate(normalized):
-            for stmt2 in normalized[i+1:]:
+            for stmt2 in normalized[i + 1:]:
                 # Check for negation patterns
                 if self._are_contradictory(stmt1, stmt2):
-                    logging.warning(f"Contradiction detected: '{statements[i]}' vs '{statements[normalized.index(stmt2)]}'")
+                    stmt2_index = normalized.index(stmt2)
+                    logging.warning(
+                        f"Contradiction detected: '{statements[i]}' vs '{statements[stmt2_index]}'"
+                    )
                     return False
         
         logging.info(f"Statements are consistent: {len(statements)} statements checked")
@@ -125,15 +129,15 @@ class FormalLogicEngine:
                 
         # If hypothesis mentions increase/decrease, derive magnitude implications
         if "increase" in hypothesis_lower:
-            implications.append(f"Magnitude will be greater than baseline")
+            implications.append("Magnitude will be greater than baseline")
         elif "decrease" in hypothesis_lower:
-            implications.append(f"Magnitude will be less than baseline")
-            
+            implications.append("Magnitude will be less than baseline")
+
         # If hypothesis mentions improvement/degradation
         if any(word in hypothesis_lower for word in ["improve", "better", "enhance"]):
-            implications.append(f"Performance metric will increase")
+            implications.append("Performance metric will increase")
         elif any(word in hypothesis_lower for word in ["degrade", "worse", "reduce"]):
-            implications.append(f"Performance metric will decrease")
+            implications.append("Performance metric will decrease")
             
         logging.info(f"Derived {len(implications)} implications from hypothesis")
         return implications

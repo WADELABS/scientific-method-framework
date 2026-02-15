@@ -1,7 +1,8 @@
-import re
-from typing import Dict, Optional, List
+from typing import Dict, List
 from datetime import datetime
 import logging
+import re
+
 
 class CitationEngine:
     """
@@ -125,7 +126,7 @@ class CitationEngine:
                     year_part = parts[1].split(")")[0].strip()
                     metadata["year"] = year_part
                     metadata["source_type"] = "reference"
-            except:
+            except Exception:
                 pass
         
         return metadata
@@ -139,7 +140,7 @@ class CitationEngine:
             # In a real app we'd call https://api.crossref.org/works/{doi}
             # For this demo, we'll simulate the check.
             logging.info(f"Validating DOI: {doi}")
-            return True 
+            return True
         except Exception as e:
             logging.error(f"DOI validation failed: {e}")
             return False
