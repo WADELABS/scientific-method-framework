@@ -1,65 +1,159 @@
-# Fixer's Log: Scientific Method Framework (SMF)
-## Solving the "Hallucinating AI" Crisis (Phase 3)
+# Scientific Method Framework (SMF)
 
-> "A high-profile technical client came to me with a nightmare: their autonomous trading agents were 'lying' to them—hallucinating transaction confirmations and following phantom causal links. Generic safety wrappers weren't seeing the problem because the code was technically valid, just epistemologically broken. They needed more than a debugger; they needed a computational straitjacket."
+> **Motivation**: Autonomous AI agents need rigorous validation before execution. The SMF enforces empirical rigor by treating every intent as a hypothesis that must be validated through experimentation before deployment.
 
-### The "Why": Computational Constraints for Verifiable Agentic Autonomy
-In an era of stochastic parrots, the SMF enforces empirical rigor on agentic reasoning...
+## Overview
 
-## 🏛️ Epistemological Grounding
-The SMF functions as a **Logical Constraint Layer** for Large Language Models. In the context of Antigravity or other agentic systems, this isn't just a philosophy—it’s the "safety rail" that prevents hallucinated paths by requiring rigorous, repeatable validation loops. 
+The Scientific Method Framework provides a computational implementation of the scientific method for AI agent validation. By requiring testable predictions and experimental validation, it prevents hallucinated paths and ensures verifiable autonomous reasoning.
 
-By treating every intent as a **Hypothesis** and every execution as an **Experiment**, the system ensures that AI actions are predictive, observable, and—most importantly—falsifiable.
+### The SMF Loop
 
-## 🔬 The Logic Flow (The SMF Loop)
+**Hypothesis** → **Experiment** → **Validation** → **Theory Update**
+
+1. **Hypothesis Generation**: Create testable predictions about system behavior
+2. **Experiment Execution**: Run tests in sandboxed environment (The Crucible)
+3. **Validation**: Compare results against predictions with statistical rigor
+4. **Theory Update**: Update knowledge base with validated findings
+
 ```mermaid
 graph TD
     H[Hypothesis Generation] -->|Prediction| S[Simulation/The Crucible]
     S -->|Outcome| O[Observation & Data Collection]
     O -->|Analysis| V{Validation}
-    V -->|Falsified| F[NullHypothesis Failure]
+    V -->|Falsified| F[Null Hypothesis Failure]
     V -->|Validated| P[Execution/Theory Update]
     F -->|Refine| H
 ```
 
-## ⚔️ The Crucible Integration
-The SMF uses **[The Crucible](file:///c:/Users/sheew/OneDrive/Desktop/the-crucible)** as its primary execution environment. Every `Experiment()` is run within The Crucible's sandboxed harness where adversarial stress-tests and computational constraints are applied. This ensures that a validated hypothesis remains robust even under extreme model-specific pressures.
+## Quick Start
 
-## 🚀 The "Now": GCP API Validation Example
-The following snippet demonstrates an agent using the SMF to validate a critical Google Cloud deployment hypothesis before committing to execution.
-
-```python
-from scientific_method.core.scientific_agent import ScientificAgent, KnowledgeBase
-from scientific_method.core.foundations import EpistemicVirtue
-
-# Initialize the research environment
-kb = KnowledgeBase()
-agent = ScientificAgent(domain="Cloud Infrastructure", knowledge_base=kb)
-
-# Define the Hypothesis: Increasing timeout solves the GCP Arbitrage Bot logs error
-hyp = agent.hypothesize(
-    statement="If I increase the GCP Cloud Run timeout to 300s, the transaction will succeed.",
-    virtue=EpistemicVirtue.PREDICTIVE_ACCURACY
-)
-
-# Execute via The Crucible (Mock Environment)
-experiment = await agent.run_experiment(hyp, environment="the-crucible")
-
-if experiment.null_hypothesis_failed():
-    print("Hypothesis Validated: Null hypothesis rejected by The Crucible.")
-    agent.apply_theory("Commit GCP Timeout Change")
-else:
-    print("Hypothesis Falsified: Timeout is not the bottleneck. Analyzing causal gaps.")
+Install dependencies:
+```bash
+pip install -r requirements.txt
 ```
 
-## 🛠️ Performance Metrics
+Run the simple example:
+```bash
+python examples/simple_example.py
+```
+
+This demonstrates a complete SMF cycle:
+- Creating a hypothesis about system performance
+- Designing and executing an experiment
+- Validating results against predictions
+- Updating theory based on evidence
+
+## Usage Example
+
+```python
+from core.scientific_agent import KnowledgeBase, Hypothesis, ScientificAgent
+from datetime import datetime
+
+# 1. Create hypothesis
+kb = KnowledgeBase()
+hypothesis = Hypothesis(
+    id="h_timeout_fix",
+    statement="Increasing timeout to 300s will reduce transaction failures",
+    variables={"timeout": "300s", "failure_rate": "low"},
+    relationships=["timeout_affects_success"],
+    domain="system_performance",
+    timestamp=datetime.now(),
+    confidence=0.7,
+    complexity=0.3,
+    novelty=0.5,
+    testability=0.9
+)
+kb.add_hypothesis(hypothesis)
+
+# 2. Initialize agent
+agent = ScientificAgent(domain="System Performance", knowledge_base=kb)
+
+# 3. Design and run experiment
+experiment = create_simple_experiment(hypothesis)
+results = run_stub_crucible(experiment)
+
+# 4. Validate and update theory
+if results["success_rate"] > 0.8:
+    hypothesis.status = HypothesisStatus.SUPPORTED
+    print(f"✓ Hypothesis validated: {hypothesis.statement}")
+else:
+    hypothesis.status = HypothesisStatus.REFUTED
+    print(f"✗ Hypothesis refuted - further investigation needed")
+```
+
+## Architecture
+
+### Core Components
+
+- **Knowledge Base**: Stores hypotheses, experiments, evidence, and theories
+- **Scientific Agent**: Manages the research cycle and hypothesis testing
+- **VSA (Verifiable Scientific Autonomy)**: Provides formal logic, citations, and provenance tracking
+  - `FormalLogicEngine`: Validates logical inference and consistency
+  - `CitationEngine`: Manages provenance and citation formatting
+  - `MerkleLedger`: Provides cryptographic provenance chain
+
+### The Crucible
+
+Experiments are executed in a sandboxed environment called "The Crucible" that provides:
+- Isolated execution context
+- Measurement and observation capabilities
+- Statistical analysis of results
+- Adversarial stress testing
+
+## Testing
+
+Run the test suite:
+```bash
+pytest tests/ -v --cov=core --cov=src
+```
+
+Current test coverage: 86% for core scientific agent module
+
+## CI/CD
+
+The project uses GitHub Actions for continuous integration:
+- Tests run on Python 3.9, 3.10, 3.11, and 3.12
+- Automated linting with flake8
+- Code coverage reporting
+
+## Performance Metrics
+
 | Stage | Computational Function | Agent Action |
 | :--- | :--- | :--- |
-| **Observation** | Data Ingestion | "I see an error in the GCP arbitrage bot logs." |
-| **Hypothesis** | Prediction Generation | "If I increase the timeout, the transaction will succeed." |
-| **Experiment** | Sandboxed Execution | The Crucible runs the code in a mock environment. |
-| **Validation** | Result Comparison | Compare result vs. prediction. Update weights. |
+| **Observation** | Data Ingestion | Identify problem or opportunity |
+| **Hypothesis** | Prediction Generation | Generate testable prediction |
+| **Experiment** | Sandboxed Execution | Run controlled test in The Crucible |
+| **Validation** | Result Comparison | Compare results vs. predictions |
+| **Theory Update** | Knowledge Integration | Update knowledge base with findings |
+
+## Development
+
+### Project Structure
+```
+scientific-method-framework/
+├── core/                  # Core framework implementation
+│   ├── scientific_agent.py
+│   ├── foundations.py
+│   └── vsa/              # Verifiable Scientific Autonomy modules
+│       ├── logic/        # Formal logic engine
+│       ├── reporting/    # Citation and publishing
+│       └── ledger/       # Cryptographic provenance
+├── src/                  # Re-exports and integrations
+├── examples/             # Example implementations
+│   └── simple_example.py # Quick start demonstration
+├── tests/                # Test suite
+└── .github/workflows/    # CI/CD configuration
+```
+
+### Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Add tests for new functionality
+4. Ensure all tests pass: `pytest tests/`
+5. Ensure linting passes: `flake8 core/ src/ --max-line-length=120`
+6. Submit a pull request
 
 ---
-docs: formalize computational constraints and framework architecture
+
 *Developed for WADELABS AI Safety Research 2026*

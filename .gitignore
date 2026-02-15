@@ -46,3 +46,14 @@ MANIFEST
 
 # Reports directory
 reports/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+coverage.xml
+*.cover
+
+# README backup
+README.md.bak
