@@ -4,28 +4,34 @@ The Consistency Check: Active research and cross-verification.
 """
 
 from .credibility import CredibilitySubstrate
+from .core.hermeneutics import HermeneuticProtocol
 from typing import List, Dict
 
 class ResearchAgent:
     def __init__(self, substrate: CredibilitySubstrate):
         self.substrate = substrate
+        self.hermeneutics = HermeneuticProtocol()
 
     async def test_hypothesis(self, hypothesis: str) -> Dict:
         """
-        Active research phase. Querying APIs and performing conflict detection.
+        Active research phase. Querying APIs and performing hermeneutic evaluation.
         """
-        # Step 1: Query Credible APIs (Placeholder for Crossref, Semantic Scholar)
+        # Step 1: Query Credible APIs
         external_data = await self.fetch_external_data(hypothesis)
         
         # Step 2: Source Filtering (Credibility Check)
         credible_evidence = self.substrate.filter_sources(external_data)
         
-        # Step 3: Conflict Detection & Hallucination Mitigation
-        # If external evidence doesn't support the internal claim, we flag it.
+        # Step 3: Hermeneutic Evaluation (Contextual Anchor)
+        # Weighs internal logic against the 'Reality Stream'
+        grounding = self.hermeneutics.process_interpretation(hypothesis, credible_evidence)
+        
+        # Step 4: Conflict Detection & Verified Reporting
         verification_report = {
             "hypothesis": hypothesis,
             "credible_sources": credible_evidence,
-            "conflicts": self.detect_conflicts(hypothesis, credible_evidence)
+            "grounding": grounding,
+            "salience": grounding['salience_score']
         }
         
         return verification_report

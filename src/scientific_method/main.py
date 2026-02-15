@@ -39,11 +39,13 @@ class ScientificAgent:
 
     def formulate_conclusion(self, verification: dict, original_hypothesis: str) -> str:
         """Synthesize research into a final, verifiable conclusion."""
-        if not verification.get("credible_sources"):
-            return "RESULT: INCONCLUSIVE. No credible evidence found to support the hypothesis."
+        salience = verification.get("salience", 0.0)
+        
+        if salience < 0.7:
+            return f"RESULT: INCONCLUSIVE (Salience: {salience}). Insufficient reality-grounding for this hypothesis."
         
         sources = "\n".join([f"- {s}" for s in verification['credible_sources']])
-        return f"RESULT: VERIFIED.\nConclusion: {original_hypothesis}\nSupported by:\n{sources}"
+        return f"RESULT: VERIFIED (Salience: {salience}).\nConclusion: {original_hypothesis}\nSupported by:\n{sources}"
 
 if __name__ == "__main__":
     from .research_test import MockResearchAgent # Placeholder for testing
