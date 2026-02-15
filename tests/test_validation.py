@@ -61,8 +61,8 @@ class TestValidation:
             "statistical_significance": False
         }
         
-        # Validate: success_rate <= 0.8 means refuted
-        if results["success_rate"] <= 0.8 or not results["statistical_significance"]:
+        # Validate: success_rate < 0.8 means refuted
+        if results["success_rate"] < 0.8 or not results["statistical_significance"]:
             h.status = HypothesisStatus.REFUTED
         
         assert h.status == HypothesisStatus.REFUTED

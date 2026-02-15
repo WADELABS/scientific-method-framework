@@ -46,26 +46,30 @@ def run_stub_crucible(experiment: Experiment) -> dict:
     print(f"     - Design: {experiment.design['type']}")
     print(f"     - Sample size: {experiment.sample_size}")
     print(f"     - Measurements: {', '.join(experiment.measurements)}")
-    
+
+    # Constants
+    BASELINE_SUCCESS_RATE = 0.5
+
     # Simulate experiment execution with realistic results
     # In a real implementation, this would run actual code in a sandbox
     success_rate = random.uniform(0.75, 0.95)
     latency_ms = random.uniform(100, 300)
     error_count = random.randint(0, 5)
-    
+
     results = {
         "success_rate": success_rate,
         "latency_ms": latency_ms,
         "error_count": error_count,
         "sample_size": experiment.sample_size,
-        "statistical_significance": success_rate > 0.8
+        "statistical_significance": success_rate > 0.8,
+        "baseline_success_rate": BASELINE_SUCCESS_RATE
     }
-    
+
     print(f"     ✓ Experiment completed")
     print(f"       - Success rate: {success_rate:.2%}")
     print(f"       - Latency: {latency_ms:.1f}ms")
     print(f"       - Errors: {error_count}")
-    
+
     return results
 
 
@@ -151,7 +155,7 @@ def main():
             source=experiment.id,
             quality_score=0.9,
             replicability=0.85,
-            effect_size=results["success_rate"] - 0.5
+            effect_size=results["success_rate"] - results.get("baseline_success_rate", 0.5)
         )
         hypothesis.supporting_evidence.append(evidence)
         kb.evidence[evidence.id] = evidence
