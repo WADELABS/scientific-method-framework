@@ -8,8 +8,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements files
-COPY requirements.txt api/requirements.txt ./
+# Copy requirements files first
+COPY requirements.txt ./
+COPY api/requirements.txt ./api/
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt && \
