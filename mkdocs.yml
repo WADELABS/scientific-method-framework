@@ -1,0 +1,87 @@
+site_name: Scientific Method Framework
+site_description: Verifiable Scientific Agent Documentation
+site_author: WADELABS
+repo_url: https://github.com/WADELABS/scientific-method-framework
+repo_name: WADELABS/scientific-method-framework
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - toc.integrate
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+nav:
+  - Home: README.md
+  - Getting Started:
+    - Installation: docs/INTEGRATION.md
+    - Quick Start: docs/INTEGRATION.md#quick-start-5-minute-setup
+  - Core Concepts:
+    - Architecture: docs/ARCHITECTURE.md
+    - Negative Space: docs/NEGATIVE_SPACE.md
+    - Workflow: docs/WORKFLOW.md
+  - Reference:
+    - VSA Engines: docs/VSA_ENGINES.md
+    - API Schemas: docs/API_SCHEMAS.md
+  - Integration: docs/INTEGRATION.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - attr_list
+  - md_in_html
+  - tables
+
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - minify:
+      minify_html: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/WADELABS/scientific-method-framework
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY

@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  smf-api:
+    build: .
+    container_name: smf-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./provenance.db:/app/provenance.db
+    environment:
+      - PYTHONPATH=/app
+      - SMF_DOMAIN=default
+      - LOG_LEVEL=INFO
+    networks:
+      - smf-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  smf-worker:
+    build: .
+    container_name: smf-worker
+    command: python -m examples.demo
+    volumes:
+      - ./data:/app/data
+      - ./provenance.db:/app/provenance.db
+    environment:
+      - PYTHONPATH=/app
+    networks:
+      - smf-network
+    depends_on:
+      - smf-api
+
+  smf-docs:
+    image: squidfunk/mkdocs-material:latest
+    container_name: smf-docs
+    ports:
+      - "8080:8000"
+    volumes:
+      - .:/docs
+    command: serve --dev-addr=0.0.0.0:8000
+    networks:
+      - smf-network
+
+networks:
+  smf-network:
+    driver: bridge
+
+volumes:
+  smf-data:
