@@ -5,9 +5,10 @@ FastAPI implementation providing REST endpoints for hypothesis management,
 experiment execution, provenance tracking, and negative space exploration.
 """
 
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, status
 from fastapi.responses import JSONResponse
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 from enum import Enum
@@ -26,20 +27,33 @@ from core.negative_space import NegativeSpaceExplorer
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Global instances (in production, use dependency injection)
+kb = KnowledgeBase()
+agents: Dict[str, ScientificAgent] = {}
+ledger = MerkleLedger(db_path="provenance.db")
+explorers: Dict[str, NegativeSpaceExplorer] = {}
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Manage startup and shutdown lifecycle."""
+    logger.info("SMF API starting up...")
+    logger.info(f"Merkle Ledger: {ledger.db_path}")
+    logger.info("SMF API ready")
+    yield
+    logger.info("SMF API shutting down...")
+    logger.info("SMF API stopped")
+
+
 # Initialize FastAPI app
 app = FastAPI(
     title="Scientific Method Framework API",
     version="1.0.0",
     description="REST API for the Verifiable Scientific Agent Framework",
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
+    lifespan=lifespan
 )
-
-# Global instances (in production, use dependency injection)
-kb = KnowledgeBase()
-agents: Dict[str, ScientificAgent] = {}
-ledger = MerkleLedger(db_path="provenance.db")
-explorers: Dict[str, NegativeSpaceExplorer] = {}
 
 
 # ============================================================================
@@ -67,8 +81,7 @@ class HypothesisCreate(BaseModel):
     novelty: float = Field(..., ge=0.0, le=1.0, description="Novelty score")
     testability: float = Field(..., ge=0.0, le=1.0, description="Testability score")
 
-    class Config:
-        schema_extra = {
+    model_config = ConfigDict(json_schema_extra={
             "example": {
                 "statement": "Increased temperature accelerates chemical reaction rate",
                 "variables": {
@@ -82,7 +95,7 @@ class HypothesisCreate(BaseModel):
                 "novelty": 0.6,
                 "testability": 0.9
             }
-        }
+        })
 
 
 class HypothesisResponse(BaseModel):
@@ -96,8 +109,7 @@ class HypothesisResponse(BaseModel):
     novelty: float
     testability: float
 
-    class Config:
-        schema_extra = {
+    model_config = ConfigDict(json_schema_extra={
             "example": {
                 "id": "h_abc123",
                 "statement": "Increased temperature accelerates chemical reaction rate",
@@ -108,7 +120,7 @@ class HypothesisResponse(BaseModel):
                 "novelty": 0.6,
                 "testability": 0.9
             }
-        }
+        })
 
 
 class ExperimentSubmit(BaseModel):
@@ -120,8 +132,7 @@ class ExperimentSubmit(BaseModel):
     measurements: List[str] = Field(default_factory=list, description="Measurements to collect")
     sample_size: int = Field(..., gt=0, description="Sample size")
 
-    class Config:
-        schema_extra = {
+    model_config = ConfigDict(json_schema_extra={
             "example": {
                 "hypothesis_id": "h_abc123",
                 "design": {"type": "controlled_experiment", "duration": "30min"},
@@ -130,7 +141,7 @@ class ExperimentSubmit(BaseModel):
                 "measurements": ["reaction_time", "product_yield"],
                 "sample_size": 100
             }
-        }
+        })
 
 
 class ExperimentResponse(BaseModel):
@@ -630,25 +641,6 @@ async def internal_error_handler(request, exc):
         status_code=500,
         content={"detail": "Internal server error", "message": str(exc)}
     )
-
-
-# ============================================================================
-# Startup/Shutdown Events
-# ============================================================================
-
-@app.on_event("startup")
-async def startup_event():
-    """Initialize on startup."""
-    logger.info("SMF API starting up...")
-    logger.info(f"Merkle Ledger: {ledger.db_path}")
-    logger.info("SMF API ready")
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    """Cleanup on shutdown."""
-    logger.info("SMF API shutting down...")
-    logger.info("SMF API stopped")
 
 
 if __name__ == "__main__":
