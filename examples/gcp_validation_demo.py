@@ -2,7 +2,6 @@
 # A functional demonstration of the SMF as a "Safety Rail" for GCP deployments.
 
 from datetime import datetime
-from core.foundations import EpistemicVirtue, ScientificParadigm
 from core.scientific_agent import ScientificAgent, KnowledgeBase, Hypothesis, Experiment
 import asyncio
 import sys
@@ -14,7 +13,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 async def main():
     kb = KnowledgeBase()
-    agent = ScientificAgent(domain="Cloud_Ops", knowledge_base=kb)
+    ScientificAgent(domain="Cloud_Ops", knowledge_base=kb)
 
     print("[1/4] Observation: Detecting latency issues in GCP Arbitrage Bot...")
 
@@ -36,7 +35,7 @@ async def main():
 
     # Simulation in 'The Crucible'
     print("[3/4] Experiment: Running sandboxed simulation in The Crucible...")
-    exp = Experiment(
+    Experiment(
         id="exp_001",
         hypothesis_id=h.id,
         design={"mock_gcp": True, "timeout": 300},

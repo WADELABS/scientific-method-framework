@@ -31,4 +31,4 @@ jobs:
 
       - name: Run linting
         run: |
-          flake8 core/ src/ examples/ --max-line-length=120 --ignore=E203,W503 --exclude=__pycache__,*.pyc
+          flake8 core/ src/ examples/ --max-line-length=120 --ignore=E203,W503,W504 --exclude=__pycache__,*.pyc

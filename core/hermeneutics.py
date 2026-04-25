@@ -1,8 +1,7 @@
 from dataclasses import dataclass
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from datetime import datetime
 import pandas as pd
-import numpy as np
 from .foundations import ScientificParadigm
 
 
@@ -155,7 +154,9 @@ class HermeneuticScientificInterpreter:
             "initial_interpretation": initial_interpretation,
             "contradictions_found": contradictions,
             "adjusted_understanding": adjusted_understanding,
-            "revised_hypothesis": revised_hypothesis_statement if revised_hypothesis_statement != hypothesis.statement else "unchanged",
+            "revised_hypothesis": (revised_hypothesis_statement
+                                   if revised_hypothesis_statement != hypothesis.statement
+                                   else "unchanged"),
             "secondary_interpretation": secondary_interpretation,
             "coherence_score": coherence_score,
             "circle_complete": coherence_score > 0.7}

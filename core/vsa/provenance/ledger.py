@@ -2,8 +2,7 @@ import sqlite3
 import hashlib
 import json
 from datetime import datetime
-from typing import List, Dict, Any, Optional
-import os
+from typing import Dict, Any
 import logging
 
 

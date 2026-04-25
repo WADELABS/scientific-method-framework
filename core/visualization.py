@@ -1,13 +1,8 @@
 import matplotlib.pyplot as plt
 import networkx as nx
-import numpy as np
-from typing import Any, Dict, List, Optional
-import matplotlib.cm as cm
-from matplotlib.figure import Figure
+from typing import Optional
 
-from .scientific_agent import KnowledgeBase, Hypothesis, HypothesisStatus
 from .agent import DeepScientificAgent
-from .foundations import ScientificParadigm
 
 
 class EnhancedScientificVisualizer:

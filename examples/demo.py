@@ -92,7 +92,7 @@ async def main():
     # 4. Visualization
     # Note: Requires matplotlib, skipped if not available/headless
     try:
-        viz = EnhancedScientificVisualizer(agent)
+        EnhancedScientificVisualizer(agent)
         # Uncomment to show/save
         # viz.visualize_quantum_states("quantum_states.png")
         # viz.visualize_knowledge_graph("knowledge_graph.png")

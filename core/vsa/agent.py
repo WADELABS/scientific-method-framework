@@ -1,8 +1,7 @@
-from typing import Dict, List, Any, Optional
-import asyncio
+from typing import Dict, List, Any
 import logging
 import uuid
-from z3 import *
+from z3 import ExprRef
 
 # Internal Imports
 from src.vsa.logic.engine import FormalLogicEngine

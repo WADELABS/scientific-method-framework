@@ -8,7 +8,6 @@ Demonstrates the complete SMF cycle:
 """
 
 import random
-from core.foundations import EpistemicVirtue
 from core.scientific_agent import (
     KnowledgeBase, Hypothesis, Experiment, Evidence, Theory,
     HypothesisStatus, ScientificAgent
@@ -41,7 +40,7 @@ def run_stub_crucible(experiment: Experiment) -> dict:
     Stub implementation of The Crucible experiment execution.
     Simulates running an experiment and returning results.
     """
-    print(f"  🔬 Running experiment in The Crucible (sandboxed environment)...")
+    print("  🔬 Running experiment in The Crucible (sandboxed environment)...")
     print(f"     - Design: {experiment.design['type']}")
     print(f"     - Sample size: {experiment.sample_size}")
     print(f"     - Measurements: {', '.join(experiment.measurements)}")
@@ -64,7 +63,7 @@ def run_stub_crucible(experiment: Experiment) -> dict:
         "baseline_success_rate": BASELINE_SUCCESS_RATE
     }
 
-    print(f"     ✓ Experiment completed")
+    print("     ✓ Experiment completed")
     print(f"       - Success rate: {success_rate:.2%}")
     print(f"       - Latency: {latency_ms:.1f}ms")
     print(f"       - Errors: {error_count}")
@@ -185,14 +184,14 @@ def main():
         hypothesis.status = HypothesisStatus.REFUTED
         print(f"✗ Hypothesis REFUTED: {hypothesis.statement}")
         print(f"  Success rate ({results['success_rate']:.2%}) below threshold (80%)")
-        print(f"  Further investigation needed to identify root cause")
+        print("  Further investigation needed to identify root cause")
 
     print()
 
     # Step 5: Summary
     print("Step 5: Summary")
     print("-" * 70)
-    print(f"Knowledge Base Status:")
+    print("Knowledge Base Status:")
     print(f"  - Hypotheses: {len(kb.hypotheses)}")
     print(f"  - Experiments: {len(kb.experiments)}")
     print(f"  - Evidence: {len(kb.evidence)}")

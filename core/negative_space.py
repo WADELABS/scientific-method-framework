@@ -5,7 +5,7 @@ Explores the space of untested hypotheses - the realm of possible hypotheses
 that haven't yet been formulated, tested, or validated.
 """
 
-from typing import List, Dict, Any, Set, Optional
+from typing import List, Dict, Any, Set
 from dataclasses import dataclass, field
 from datetime import datetime
 import uuid

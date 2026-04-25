@@ -6,7 +6,6 @@ from opentelemetry.sdk.trace.export import (
 )
 from opentelemetry.trace import Status, StatusCode
 import logging
-from typing import Optional
 
 
 class ScientificObserver:

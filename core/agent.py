@@ -1,12 +1,11 @@
 import logging
-import asyncio
 from typing import Set, Dict, List, Any, Optional, Tuple
 from collections import defaultdict
 import numpy as np
 import networkx as nx
 from datetime import datetime
 
-from .scientific_agent import ScientificAgent, KnowledgeBase, Hypothesis, Experiment, Evidence, Theory, HypothesisStatus
+from .scientific_agent import ScientificAgent, KnowledgeBase, Hypothesis, Experiment, Theory, HypothesisStatus
 from .foundations import ScientificParadigm, ParadigmLens, EpistemicVirtue
 from .quantum import QuantumScientificReasoner
 from .hermeneutics import HermeneuticScientificInterpreter, InterpretiveHorizon
@@ -495,12 +494,12 @@ class DeepScientificAgent(ScientificAgent):
                             # Found falsification - expected
                             logging.info(f"Falsification attempt successful for {experiment.id}")
                         else:
-                            unexplained.append(f"No falsification despite predictions")
+                            unexplained.append("No falsification despite predictions")
 
                 elif lens.paradigm == ScientificParadigm.COMPLEXITY:
                     # Should find nonlinear patterns
                     if "linear" in test and results.get("significant", False):
-                        unexplained.append(f"Linear effect in supposedly complex system")
+                        unexplained.append("Linear effect in supposedly complex system")
 
         return unexplained
 
@@ -637,7 +636,6 @@ class DeepScientificAgent(ScientificAgent):
             # Check if paradigm has different logical constraints
             lens = self.paradigm_lenses.get(paradigm)
             if lens:
-                contradictions = anomaly.get("contradictions", [])
                 # Some paradigms tolerate contradictions better
                 if paradigm in [ScientificParadigm.FEYERABEND, ScientificParadigm.HERMENEUTIC]:
                     return True  # These paradigms embrace contradictions

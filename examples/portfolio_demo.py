@@ -8,7 +8,7 @@ import os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 try:
-    from z3 import *
+    from z3 import Real
 except ImportError:
     logging.error("Z3 solver not found.")
 
@@ -49,7 +49,7 @@ async def run_portfolio_demo():
     )
 
     if result["status"] == "success":
-        print(f"\n[+] Alpha Hypothesis Verified!")
+        print("\n[+] Alpha Hypothesis Verified!")
         print(f"    Ledger Block: {result['block_hash']}")
         print(f"    Report Path:  {result['report']}")
     else:
