@@ -7,19 +7,17 @@ Demonstrates the complete SMF cycle:
 3. Validation and theory update
 """
 
+import random
+from core.scientific_agent import (
+    KnowledgeBase, Hypothesis, Experiment, Evidence, Theory,
+    HypothesisStatus, ScientificAgent
+)
 from datetime import datetime
 import sys
 import os
 
 # Add parent directory to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
-
-from core.scientific_agent import (
-    KnowledgeBase, Hypothesis, Experiment, Evidence, Theory, 
-    HypothesisStatus, ScientificAgent
-)
-from core.foundations import EpistemicVirtue
-import random
 
 
 def create_simple_experiment(hypothesis: Hypothesis) -> Experiment:
@@ -42,7 +40,7 @@ def run_stub_crucible(experiment: Experiment) -> dict:
     Stub implementation of The Crucible experiment execution.
     Simulates running an experiment and returning results.
     """
-    print(f"  🔬 Running experiment in The Crucible (sandboxed environment)...")
+    print("  🔬 Running experiment in The Crucible (sandboxed environment)...")
     print(f"     - Design: {experiment.design['type']}")
     print(f"     - Sample size: {experiment.sample_size}")
     print(f"     - Measurements: {', '.join(experiment.measurements)}")
@@ -65,7 +63,7 @@ def run_stub_crucible(experiment: Experiment) -> dict:
         "baseline_success_rate": BASELINE_SUCCESS_RATE
     }
 
-    print(f"     ✓ Experiment completed")
+    print("     ✓ Experiment completed")
     print(f"       - Success rate: {success_rate:.2%}")
     print(f"       - Latency: {latency_ms:.1f}ms")
     print(f"       - Errors: {error_count}")
@@ -78,11 +76,11 @@ def main():
     print("Scientific Method Framework - Simple Example")
     print("=" * 70)
     print()
-    
+
     # Step 1: Create Knowledge Base and Hypothesis
     print("Step 1: Hypothesis Generation")
     print("-" * 70)
-    
+
     kb = KnowledgeBase()
     hypothesis = Hypothesis(
         id="h_timeout_fix",
@@ -97,36 +95,36 @@ def main():
         testability=0.9
     )
     kb.add_hypothesis(hypothesis)
-    
+
     print(f"Hypothesis: {hypothesis.statement}")
     print(f"  - Domain: {hypothesis.domain}")
     print(f"  - Testability: {hypothesis.testability}")
     print(f"  - Confidence: {hypothesis.confidence}")
     print(f"  - Status: {hypothesis.status.name}")
     print()
-    
+
     # Step 2: Create Scientific Agent
     print("Step 2: Initialize Scientific Agent")
     print("-" * 70)
-    
+
     agent = ScientificAgent(domain="System Performance", knowledge_base=kb)
     agent.active_hypotheses.append(hypothesis)
-    
+
     print(f"Agent initialized in domain: {agent.domain}")
     print(f"Active hypotheses: {len(agent.active_hypotheses)}")
     print()
-    
+
     # Step 3: Design and Run Experiment
     print("Step 3: Experiment Execution")
     print("-" * 70)
-    
+
     hypothesis.status = HypothesisStatus.TESTING
     experiment = create_simple_experiment(hypothesis)
     kb.experiments[experiment.id] = experiment
-    
+
     print(f"Experiment designed: {experiment.id}")
     results = run_stub_crucible(experiment)
-    
+
     # Record results
     experiment.results = results
     experiment.analysis = {
@@ -135,16 +133,16 @@ def main():
         "statistical_significance": results["statistical_significance"]
     }
     print()
-    
+
     # Step 4: Validation and Theory Update
     print("Step 4: Validation and Theory Update")
     print("-" * 70)
-    
+
     if results["success_rate"] > 0.8 and results["statistical_significance"]:
         hypothesis.status = HypothesisStatus.SUPPORTED
         print(f"✓ Hypothesis VALIDATED: {hypothesis.statement}")
         print(f"  Success rate ({results['success_rate']:.2%}) exceeds threshold (80%)")
-        
+
         # Create evidence
         evidence = Evidence(
             id=f"ev_{experiment.id}",
@@ -159,7 +157,7 @@ def main():
         )
         hypothesis.supporting_evidence.append(evidence)
         kb.evidence[evidence.id] = evidence
-        
+
         # Update theory
         theory = Theory(
             id="theory_timeout_performance",
@@ -177,23 +175,23 @@ def main():
             evidence=[evidence]
         )
         kb.add_theory(theory)
-        
+
         print(f"\n  Theory updated: '{theory.name}'")
         print(f"  - Predictive power: {theory.predictive_power}")
         print(f"  - Empirical support: {theory.empirical_support}")
-        
+
     else:
         hypothesis.status = HypothesisStatus.REFUTED
         print(f"✗ Hypothesis REFUTED: {hypothesis.statement}")
         print(f"  Success rate ({results['success_rate']:.2%}) below threshold (80%)")
-        print(f"  Further investigation needed to identify root cause")
-    
+        print("  Further investigation needed to identify root cause")
+
     print()
-    
+
     # Step 5: Summary
     print("Step 5: Summary")
     print("-" * 70)
-    print(f"Knowledge Base Status:")
+    print("Knowledge Base Status:")
     print(f"  - Hypotheses: {len(kb.hypotheses)}")
     print(f"  - Experiments: {len(kb.experiments)}")
     print(f"  - Evidence: {len(kb.evidence)}")

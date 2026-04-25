@@ -1,15 +1,15 @@
-import json
 import logging
 import os
 from typing import Dict, List, Any
 from datetime import datetime
+
 
 class ResearchPublisher:
     """
     Layer 7: Auto-Publication Pipeline.
     Generates peer-review ready research reports in Markdown/LaTeX.
     """
-    
+
     def __init__(self, output_dir: str = "reports"):
         self.output_dir = output_dir
         if not os.path.exists(output_dir):
@@ -20,7 +20,7 @@ class ResearchPublisher:
         """Compile research results and provenance into a structured report."""
         report_id = f"report_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         filepath = f"{self.output_dir}/{report_id}.md"
-        
+
         content = f"""# Scientific Research Report: {results.get('title', 'Untitled Exploration')}
 ## Agent ID: {agent_id} | Timestamp: {datetime.now().isoformat()}
 
@@ -42,6 +42,6 @@ The following blocks in the immutable ledger represent the verifiable execution 
 """
         with open(filepath, "w") as f:
             f.write(content)
-            
+
         logging.info(f"Report generated: {filepath}")
         return filepath

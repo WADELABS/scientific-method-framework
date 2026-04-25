@@ -1,8 +1,9 @@
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional, Set
+from typing import List, Dict, Any, Optional
 from enum import Enum, auto
 from datetime import datetime
 import uuid
+
 
 class HypothesisStatus(Enum):
     PROPOSED = auto()
@@ -11,6 +12,7 @@ class HypothesisStatus(Enum):
     WELL_SUPPORTED = auto()
     REFUTED = auto()
     DISCARDED = auto()
+
 
 @dataclass
 class Evidence:
@@ -23,6 +25,7 @@ class Evidence:
     quality_score: float = 0.5
     replicability: float = 0.5
     effect_size: Optional[float] = None
+
 
 @dataclass
 class Hypothesis:
@@ -40,6 +43,7 @@ class Hypothesis:
     supporting_evidence: List[Evidence] = field(default_factory=list)
     disconfirming_evidence: List[Evidence] = field(default_factory=list)
 
+
 @dataclass
 class Experiment:
     id: str
@@ -53,6 +57,7 @@ class Experiment:
     statistical_tests: List[str]
     results: Optional[Any] = None
     analysis: Optional[Dict[str, Any]] = None
+
 
 @dataclass
 class Theory:
@@ -68,6 +73,7 @@ class Theory:
     evidence: List[Evidence]
     metadata: Dict[str, Any] = field(default_factory=dict)
 
+
 class KnowledgeBase:
     def __init__(self):
         self.hypotheses: Dict[str, Hypothesis] = {}
@@ -81,6 +87,7 @@ class KnowledgeBase:
     def add_theory(self, theory: Theory):
         self.theories[theory.id] = theory
 
+
 class ScientificAgent:
     def __init__(self, domain: str, knowledge_base: KnowledgeBase):
         self.domain = domain
@@ -89,7 +96,7 @@ class ScientificAgent:
         self.active_experiments: List[Experiment] = []
         self.pending_experiments: List[Experiment] = []
         self.recent_evidence: List[Evidence] = []
-        
+
         # Agent parameters
         self.novelty_preference: float = 0.5
         self.risk_tolerance: float = 0.5
@@ -110,10 +117,10 @@ class ScientificAgent:
             randomization_procedure="standard",
             statistical_tests=[]
         )
-    
+
     def _find_hypothesis(self, hypothesis_id: str) -> Optional[Hypothesis]:
         return self.knowledge_base.hypotheses.get(hypothesis_id)
-    
+
     def _hypothesis_similarity(self, h1: Hypothesis, h2: Hypothesis) -> float:
         """Calculate semantic similarity between hypotheses."""
         # Simple Jaccard similarity of words

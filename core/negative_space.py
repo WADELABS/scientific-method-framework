@@ -5,7 +5,7 @@ Explores the space of untested hypotheses - the realm of possible hypotheses
 that haven't yet been formulated, tested, or validated.
 """
 
-from typing import List, Dict, Any, Set, Optional
+from typing import List, Dict, Any, Set
 from dataclasses import dataclass, field
 from datetime import datetime
 import uuid
@@ -29,7 +29,7 @@ class NegativeSpaceRegion:
 class NegativeSpaceExplorer:
     """
     Explores the space of untested hypotheses.
-    
+
     The Negative Space represents all possible hypotheses that haven't
     been formulated or tested yet. This class provides methods to:
     - Map the unexplored hypothesis space
@@ -37,11 +37,11 @@ class NegativeSpaceExplorer:
     - Track exploration coverage
     - Identify high-value areas to investigate
     """
-    
+
     def __init__(self, knowledge_base: KnowledgeBase, domain: str):
         """
         Initialize the Negative Space Explorer.
-        
+
         Args:
             knowledge_base: The knowledge base containing explored hypotheses
             domain: The domain of investigation
@@ -52,18 +52,18 @@ class NegativeSpaceExplorer:
         self.frontier: List[Dict[str, Any]] = []
         self._initialize_exploration()
         logging.info(f"NegativeSpaceExplorer initialized for domain: {domain}")
-        
+
     def _initialize_exploration(self):
         """Initialize the exploration by analyzing existing hypotheses."""
         # Mark existing hypotheses as explored
         for hyp_id, hypothesis in self.knowledge_base.hypotheses.items():
             if hypothesis.domain == self.domain:
                 self.explored_space.add(hypothesis.statement.lower())
-                
+
     def map_negative_space(self) -> Dict[str, Any]:
         """
         Map the unexplored hypothesis space.
-        
+
         Returns:
             Dictionary containing:
             - explored_count: Number of explored hypotheses
@@ -72,20 +72,20 @@ class NegativeSpaceExplorer:
             - coverage: Exploration coverage percentage
         """
         explored_count = len(self.explored_space)
-        
+
         # Analyze knowledge base to find conceptual gaps
         concepts = self._extract_concepts()
         relationships = self._extract_relationships()
-        
+
         # Estimate total space based on combinatorial analysis
         # Simple heuristic: concepts^2 * relationships
         total_estimated = max(len(concepts) ** 2 * len(relationships), 100)
-        
+
         # Identify frontier regions
         frontier_regions = self._identify_frontier_regions(concepts, relationships)
-        
+
         coverage = explored_count / total_estimated if total_estimated > 0 else 0.0
-        
+
         neg_space_map = {
             "domain": self.domain,
             "explored_count": explored_count,
@@ -96,10 +96,10 @@ class NegativeSpaceExplorer:
             "relationships": list(relationships),
             "timestamp": datetime.now().isoformat()
         }
-        
-        logging.info(f"Negative space mapped: {coverage*100:.2f}% coverage")
+
+        logging.info(f"Negative space mapped: {coverage * 100:.2f}% coverage")
         return neg_space_map
-        
+
     def _extract_concepts(self) -> Set[str]:
         """Extract key concepts from existing hypotheses."""
         concepts = set()
@@ -111,7 +111,7 @@ class NegativeSpaceExplorer:
                 # Add variables as concepts
                 concepts.update(hypothesis.variables.keys())
         return concepts
-        
+
     def _extract_relationships(self) -> Set[str]:
         """Extract relationship types from existing hypotheses."""
         relationships = set()
@@ -122,11 +122,11 @@ class NegativeSpaceExplorer:
         if not relationships:
             relationships = {"causes", "correlates_with", "influences", "depends_on"}
         return relationships
-        
+
     def _identify_frontier_regions(self, concepts: Set[str], relationships: Set[str]) -> List[Dict[str, Any]]:
         """Identify high-potential frontier regions."""
         frontier_regions = []
-        
+
         # Region 1: Unexplored concept combinations
         unexplored_combinations = self._find_unexplored_combinations(concepts, relationships)
         if unexplored_combinations:
@@ -136,7 +136,7 @@ class NegativeSpaceExplorer:
                 "potential_count": len(unexplored_combinations),
                 "priority": 0.8
             })
-            
+
         # Region 2: Adjacent concepts (concepts mentioned but not deeply explored)
         adjacent_concepts = self._find_adjacent_concepts(concepts)
         if adjacent_concepts:
@@ -146,7 +146,7 @@ class NegativeSpaceExplorer:
                 "concepts": list(adjacent_concepts)[:10],
                 "priority": 0.6
             })
-            
+
         # Region 3: Inverse relationships
         frontier_regions.append({
             "type": "inverse_relationships",
@@ -154,16 +154,16 @@ class NegativeSpaceExplorer:
             "potential_count": len(relationships) * 2,
             "priority": 0.5
         })
-        
+
         return frontier_regions
-        
+
     def _find_unexplored_combinations(self, concepts: Set[str], relationships: Set[str]) -> List[Dict[str, str]]:
         """Find combinations of concepts and relationships not yet explored."""
         unexplored = []
         concepts_list = list(concepts)[:10]  # Limit for practicality
-        
+
         for i, concept1 in enumerate(concepts_list):
-            for concept2 in concepts_list[i+1:]:
+            for concept2 in concepts_list[i + 1:]:
                 for relationship in relationships:
                     # Generate hypothesis statement
                     statement = f"{concept1} {relationship} {concept2}"
@@ -175,7 +175,7 @@ class NegativeSpaceExplorer:
                             "statement": statement
                         })
         return unexplored[:50]  # Return top 50
-        
+
     def _find_adjacent_concepts(self, concepts: Set[str]) -> Set[str]:
         """Find concepts that are adjacent but not fully explored."""
         # In a real implementation, this could use word embeddings or domain ontologies
@@ -190,26 +190,26 @@ class NegativeSpaceExplorer:
                         if word not in concepts and len(word) > 3:
                             adjacent.add(word)
         return adjacent
-        
+
     def generate_frontier_hypotheses(self, count: int = 5) -> List[Hypothesis]:
         """
         Generate novel hypotheses at the frontier of knowledge.
-        
+
         Args:
             count: Number of hypotheses to generate
-            
+
         Returns:
             List of newly generated hypotheses
         """
         concepts = self._extract_concepts()
         relationships = self._extract_relationships()
         unexplored = self._find_unexplored_combinations(concepts, relationships)
-        
+
         generated_hypotheses = []
-        
+
         for i, combo in enumerate(unexplored[:count]):
             hypothesis_id = f"h_neg_{uuid.uuid4().hex[:8]}"
-            
+
             hypothesis = Hypothesis(
                 id=hypothesis_id,
                 statement=combo["statement"],
@@ -225,37 +225,37 @@ class NegativeSpaceExplorer:
                 novelty=0.9,  # High novelty as they're from negative space
                 testability=0.7
             )
-            
+
             generated_hypotheses.append(hypothesis)
             self.explored_space.add(combo["statement"].lower())
-            
+
         logging.info(f"Generated {len(generated_hypotheses)} frontier hypotheses")
         return generated_hypotheses
-        
+
     def calculate_exploration_coverage(self) -> float:
         """
         Calculate what percentage of possible space has been explored.
-        
+
         Returns:
             Coverage as a float between 0.0 and 1.0
         """
         neg_space_map = self.map_negative_space()
         coverage = neg_space_map["coverage"]
-        logging.info(f"Exploration coverage: {coverage*100:.2f}%")
+        logging.info(f"Exploration coverage: {coverage * 100:.2f}%")
         return coverage
-        
+
     def identify_high_value_regions(self) -> List[Dict[str, Any]]:
         """
         Find promising unexplored areas based on various heuristics.
-        
+
         Returns:
             List of high-value regions sorted by priority
         """
         concepts = self._extract_concepts()
         relationships = self._extract_relationships()
-        
+
         high_value_regions = []
-        
+
         # Region 1: High-testability unexplored areas
         unexplored = self._find_unexplored_combinations(concepts, relationships)
         if unexplored:
@@ -268,7 +268,7 @@ class NegativeSpaceExplorer:
                 "priority_score": 0.9,
                 "reasoning": "These combinations use well-understood concepts with clear relationships"
             })
-            
+
         # Region 2: Novel concept integration
         adjacent_concepts = self._find_adjacent_concepts(concepts)
         if adjacent_concepts:
@@ -281,20 +281,20 @@ class NegativeSpaceExplorer:
                 "priority_score": 0.7,
                 "reasoning": "These concepts appear in relationships but aren't fully integrated"
             })
-            
+
         # Region 3: Contradiction exploration
         high_value_regions.append({
             "id": f"hvr_{uuid.uuid4().hex[:8]}",
             "type": "contradiction_space",
             "description": "Negations and contradictions of supported hypotheses",
-            "estimated_hypotheses": len([h for h in self.knowledge_base.hypotheses.values() 
+            "estimated_hypotheses": len([h for h in self.knowledge_base.hypotheses.values()
                                         if h.domain == self.domain]),
             "priority_score": 0.6,
             "reasoning": "Testing contradictions can strengthen or refute current knowledge"
         })
-        
+
         # Sort by priority score
         high_value_regions.sort(key=lambda x: x["priority_score"], reverse=True)
-        
+
         logging.info(f"Identified {len(high_value_regions)} high-value regions")
         return high_value_regions

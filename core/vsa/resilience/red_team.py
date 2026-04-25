@@ -1,14 +1,14 @@
-import hashlib
 import re
-from typing import Dict, List, Any
+from typing import Dict, Any
 import logging
+
 
 class RedTeamresilience:
     """
     Layer 4: Adversarial Resilience.
     Module to detect and reject potentially hallucinated or adversarial data.
     """
-    
+
     def __init__(self):
         # Dictionary of known adversarial patterns or sanity check rules
         self.sanity_rules = [
@@ -21,7 +21,7 @@ class RedTeamresilience:
     def _check_statistical_outliers(self, data: Dict[str, Any]) -> bool:
         """Reject data with physical impossibilities (e.g., negative Kelvin)."""
         # Example: if temperature < 0 and scale == 'K'
-        return True # Simplified
+        return True  # Simplified
 
     def _check_contradictory_citations(self, data: Dict[str, Any]) -> bool:
         """Cross-check if same claim is cited with opposing outcomes."""
