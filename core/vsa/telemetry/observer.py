@@ -8,12 +8,13 @@ from opentelemetry.trace import Status, StatusCode
 import logging
 from typing import Optional
 
+
 class ScientificObserver:
     """
     Layer 5: Telemetry & Observability.
     Provides deep tracing into the agent's decision-making process.
     """
-    
+
     def __init__(self, service_name: str = "vsa-research-agent"):
         provider = TracerProvider()
         processor = BatchSpanProcessor(ConsoleSpanExporter())

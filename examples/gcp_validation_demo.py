@@ -1,6 +1,9 @@
 # Examples: GCP Validation Script
 # A functional demonstration of the SMF as a "Safety Rail" for GCP deployments.
 
+from datetime import datetime
+from core.foundations import EpistemicVirtue, ScientificParadigm
+from core.scientific_agent import ScientificAgent, KnowledgeBase, Hypothesis, Experiment
 import asyncio
 import sys
 import os
@@ -8,16 +11,13 @@ import os
 # Ensure the core module is in the path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from core.scientific_agent import ScientificAgent, KnowledgeBase, Hypothesis, Experiment
-from core.foundations import EpistemicVirtue, ScientificParadigm
-from datetime import datetime
 
 async def main():
     kb = KnowledgeBase()
     agent = ScientificAgent(domain="Cloud_Ops", knowledge_base=kb)
-    
+
     print("[1/4] Observation: Detecting latency issues in GCP Arbitrage Bot...")
-    
+
     # Define a falsifiable hypothesis
     h = Hypothesis(
         id="h_gcp_timeout_001",
@@ -31,9 +31,9 @@ async def main():
         novelty=0.1,
         testability=1.0
     )
-    
+
     print(f"[2/4] Hypothesis: '{h.statement}'")
-    
+
     # Simulation in 'The Crucible'
     print("[3/4] Experiment: Running sandboxed simulation in The Crucible...")
     exp = Experiment(
@@ -47,11 +47,11 @@ async def main():
         randomization_procedure="none",
         statistical_tests=["Null Hypothesis Test"]
     )
-    
+
     # Logic for NullHypothesis failure
     # In a real app, this would call The Crucible's API
-    validation_success = True 
-    
+    validation_success = True
+
     print("[4/4] Validation...")
     if validation_success:
         print("Success: Null Hypothesis rejected. Logic validated for deployment.")
